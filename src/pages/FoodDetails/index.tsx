@@ -115,6 +115,12 @@ const FoodDetails: React.FC = () => {
 
   const cartTotal = useMemo(() => {
     // Calculate cartTotal
+    const extrasTotal = extras.reduce(
+      (acc, extra) => acc + extra.value * extra.quantity,
+      0,
+    );
+
+    return formatValue(extrasTotal + foodQuantity * food.price);
   }, [extras, food, foodQuantity]);
 
   async function handleFinishOrder(): Promise<void> {
