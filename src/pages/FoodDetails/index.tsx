@@ -94,11 +94,21 @@ const FoodDetails: React.FC = () => {
   }, [routeParams]);
 
   function handleIncrementExtra(id: number): void {
-    // Increment extra quantity
+    setExtras(
+      extras.map(extra =>
+        extra.id === id ? { ...extra, quantity: extra.quantity + 1 } : extra,
+      ),
+    );
   }
 
   function handleDecrementExtra(id: number): void {
-    // Decrement extra quantity
+    setExtras(
+      extras.map(extra =>
+        extra.id === id && extra.quantity > 0
+          ? { ...extra, quantity: extra.quantity - 1 }
+          : extra,
+      ),
+    );
   }
 
   function handleIncrementFood(): void {
