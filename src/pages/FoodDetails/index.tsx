@@ -110,17 +110,22 @@ const FoodDetails: React.FC = () => {
   }
 
   const toggleFavorite = useCallback(() => {
-    // Toggle if food is favorite or not
+    if (isFavorite) {
+      api.delete(`/favorites/${food.id}`);
+    } else {
+      api.post(`/favorites`, food);
+    }
+
+    setIsFavorite(!isFavorite);
   }, [isFavorite, food]);
 
   const cartTotal = useMemo(() => {
-    // Calculate cartTotal
     const extrasTotal = extras.reduce(
       (acc, extra) => acc + extra.value * extra.quantity,
       0,
     );
 
-    return formatValue(extrasTotal + foodQuantity * food.price);
+    return formatValue((extrasTotal + foodQuantity) * food.price);
   }, [extras, food, foodQuantity]);
 
   async function handleFinishOrder(): Promise<void> {
